@@ -4,17 +4,21 @@ const express = require('express');
 const dotenv =  require('dotenv');
 const morgan = require('morgan');
 
-const app =  express();
+const connectDB = require('./config/db');
+const indexRoutes = require('./routes');
+
+//* Load Config
+dotenv.config({path : "./config/config.env"});
+
+//* Database Connection
+connectDB(); 
+
+const app =  express(); 
 
 //* Loging
 if(process.env.NODE_ENV === "development"){
     app.use(morgan("dev"));
 }
-
-const indexRoutes = require('./routes');
-
-//* Load Config
-dotenv.config({path : "./config/config.env"});
 
 //* View Engine
 app.set('view engine','ejs');
