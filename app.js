@@ -1,9 +1,15 @@
 const path = require('path');
 
 const express = require('express');
-const dotenv =  require('Dotenv');
+const dotenv =  require('dotenv');
+const morgan = require('morgan');
 
 const app =  express();
+
+//* Loging
+if(process.env.NODE_ENV === "development"){
+    app.use(morgan("dev"));
+}
 
 const indexRoutes = require('./routes');
 
