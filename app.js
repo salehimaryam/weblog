@@ -1,35 +1,42 @@
-const path = require('path');
+const path = require("path");
 
-const express = require('express');
-const dotenv =  require('dotenv');
-const morgan = require('morgan');
+const express = require("express");
+const expressLayout = require("express-ejs-layouts");
+const dotEnv = require("dotenv");
+const morgan = require("morgan");
 
-const connectDB = require('./config/db');
-const indexRoutes = require('./routes');
+const connectDB = require("./config/db");
+const indexRoutes = require("./routes");
 
 //* Load Config
-dotenv.config({path : "./config/config.env"});
+dotEnv.config({ path: "./config/config.env" });
 
-//* Database Connection
-connectDB(); 
+//* Database connection
+connectDB();
 
-const app =  express(); 
+const app = express();
 
-//* Loging
-if(process.env.NODE_ENV === "development"){
+//* Logging
+if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
 
 //* View Engine
-app.set('view engine','ejs');
-app.set('views','views');
+app.use(expressLayout); 
+app.set("view engine", "ejs");
+app.set("layout","./layouts/mainlayouts");  
+app.set("views", "views");
 
-//*Static folder
-app.use(express.static(path.join(__dirname,"public")));
+//* Static Folder
+app.use(express.static(path.join(__dirname, "public"))); 
 
-//*Routes
+//* Routes
 app.use(indexRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,() => console.log(`server runinng on ${process.env.NODE_ENV} port ${PORT}`));
+app.listen(PORT, () =>
+    console.log(
+        `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    )
+);
