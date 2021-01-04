@@ -1,10 +1,13 @@
 const {Router} = require("express");
 
 const router = new Router();
-//@desc Login page
-//@route GET/dashboard/login
-router.get("/login",(req,res) => {
-    res.render("login",{pageTitle:"ورود به بخش مدیریت" , path :"/login"});
+
+//@ desc Dashboard
+//@ route GET/dashboard
+router.get("/",(req,res) => {
+  res.render("dashboard", {
+      pageTitle:"ورود به بخش مدیریت|داشبور",
+      path :"/dashboard.ejs"});
 });
 
 module.exports = router;
