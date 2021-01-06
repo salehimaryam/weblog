@@ -37,6 +37,11 @@ app.use("/",require('./routes/blog'));
 app.use("/users",require('./routes/users'));
 app.use("/dashboard",require('./routes/dashboard'));
 
+//* 404 pages
+app.use((req,res) => {
+    res.render("404",{pageTitle:"404|صفحه ی مورد نظر پیدا نشد.",path:"/404"});
+  });
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () =>
