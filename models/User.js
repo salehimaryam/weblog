@@ -1,26 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Yup = require("yup");
 
 const userSchema = new mongoose.Schema({
-    fullname:{
-        type:String,
-        required:[true,"نام و نام خانوادگی الزامی می باشد"],
-        trim:true,
+    fullname: {
+        type: String,
+        required: [true, "نام و نام خانوادگی الزامی می باشد"],
+        trim: true,
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    password:{
-        type:String,
-        required:true,
-        minlength:4,
-        maxlength:255,
+    password: {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 255,
     },
-    createAt:{
-        type:Date,
-        default:now.Date,
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
 });
 
@@ -41,9 +41,10 @@ const schema = Yup.object().shape({
         .oneOf([Yup.ref("password"), null]),
 });
 
-userSchema.static.userValidation = function(body){
-   return schema.validate(body,{abortEarly:false});
-} 
+userSchema.statics.userValidation = function (body) {
+    return schema.validate(body, { abortEarly: false });
+};
 
-const User = mongoose.model("User",userSchema);
-module.export = User;
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
