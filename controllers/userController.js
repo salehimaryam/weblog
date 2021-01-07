@@ -9,13 +9,23 @@ exports.register = (req,res) => {
 };
 
 exports.createUser = async (req,res) => {
-   try {
+    const errors = [];
+    try {
       await User.userValidation(req.body);
-      //await User.create(req.body);
+      const {fullname,email,password} = req.body;
+      const user = await User.findOne({email});
+      if(user){
+         errors.push({message:"کاربری با این ایمیل وجود دارد"});
+      return res.render("register", {
+        pageTitle: "ثبت نام کاربر",
+        path: "/register",
+        errors,
+        });
+    }
+      await User.create(req.body);
       res.redirect("/users/login");
-  } catch (err) {
+    } catch (err) {
       console.log(err);
-      const errors = [];
       err.inner.forEach((e) => {
           errors.push({
               name: e.path,
