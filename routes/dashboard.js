@@ -8,7 +8,9 @@ const router = new Router();
 router.get("/",authenticated,(req,res) => {
   res.render("dashboard", {
       pageTitle:"ورود به بخش مدیریت|داشبور",
-      path :"/dashboard.ejs"});
+      path :"/dashboard.ejs",
+      fullname: req.user.fullname,
+  });
 });
 
 module.exports = router;
