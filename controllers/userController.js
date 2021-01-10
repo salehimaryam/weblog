@@ -13,8 +13,15 @@ exports.login = (req,res) => {
 };
 
 exports.handleLogin = (req,res,next) => {
+    if (!req.body["g-recaptcha-response"]) {
+        req.flash("error", "اعتبار سنجی captcha الزامی می باشد");
+        return res.redirect("/users/login");
+    }
+    const secretKey = process.env.CAPTCH_SECRET;
+    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body["g-recaptcha-response"]}
+    &remoteip=${req.connection.remoteAddress}`;
+
     passport.authenticate("local",{
-       // successRedirect: "/dashboard",
         failureRedirect: "/users/login",
         failureFlash: true,
     })(req,res,next);
