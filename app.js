@@ -1,6 +1,7 @@
 const path = require("path");
 
 const debug = require('debug')("weblog");
+const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require('mongoose');
 const expressLayout = require("express-ejs-layouts");
@@ -40,7 +41,8 @@ app.set("layout","./layouts/mainlayouts");
 app.set("views", "views");
 
 //* Body Paser
-app.use(express.urlencoded({ extended:false }));
+app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.json());
 
 //* Session
 app.use(
