@@ -1,3 +1,5 @@
+const blog = require('../models/Blog.js');
+
 exports.getDashboard = async (req,res) => {
    res.render("private/blogs",{
        pageTitle :" بخش مدیریت | داشبورد",
@@ -14,4 +16,13 @@ exports.getAddPost = (req, res) => {
         layout: "./layouts/dashlayout",
         fullname: req.user.fullname,
     });
+};
+
+exports.createPost = async(req,res) => {
+   try{
+      await blog.create({...req.body, usre:req.user.id});
+      res.redirect("/dashboard");
+   }catch(err){
+      console.log(err);
+   }
 };
